@@ -30,7 +30,7 @@ cal_error: cal_error.c
 	${CC} ${CFLAGS} compute_pi.c  cal_error.c -o cal_error
 
 run: bench cal_error
-	for i in `seq 1000 400 1000000`; do \
+	for i in `seq 1600 400 1600000`; do \
 		./bench $$i; \
 		./cal_error $$i; \
 	done

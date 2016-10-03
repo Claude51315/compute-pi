@@ -9,8 +9,8 @@ avx = data[data[1] == 'avx',]
 avx_unroll =  data[data[1] == 'avxunroll',]
 
 # plot orignal data
-#png(filename = "error.png" , width = 1920 , height = 1920*0.75)
-X11()
+png(filename = "error.png" , width = 1920 , height = 1920*0.75)
+#X11()
 plot(baseline[,2], baseline[,3], type = 'l' , col = "red",
      xlab = "N", ylab = "error" , main = "error")
 lines(omp2[,2], omp2[,3], type = 'l' , col = "blue")
@@ -22,4 +22,4 @@ legend('topleft', # places a legend at the appropriate place
        c("baseline", "omp2", "omp4","avx","avx_unroll"), # puts text in the legend
        lty=c(1,1,1,1,1), # gives the legend appropriate symbols (lines)
        lwd=c(2.5,2.5,2.5,2.5,2.5),col=c("red","blue", "black","yellow","green"))
-#dev.off()
+dev.off()
