@@ -16,6 +16,8 @@ int main(int argc, char *argv[])
     double pi = compute_pi_omp(N, 4);
 #elif avx
     double pi = compute_pi_avx(N);
+#elif avxunroll
+    double pi = compute_pi_avx_unroll(N);
 #else
     double pi = compute_pi_baseline(N);
 #endif

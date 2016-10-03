@@ -8,6 +8,7 @@ EXECUTABLES=pi_baseline \
 			pi_omp2 \
 			pi_omp4 \
 			pi_avx \
+			pi_avx_unroll \
 			bench
 
 
@@ -20,6 +21,8 @@ pi_omp4:
 	${CC} ${CFLAGS} -Domp4 compute_pi.c time_measure.c main.c -o pi_omp4
 pi_avx:
 	${CC} ${CFLAGS} -Davx compute_pi.c time_measure.c main.c -o pi_avx
+pi_avx_unroll:
+	${CC} ${CFLAGS} -Davxunroll compute_pi.c time_measure.c main.c -o pi_avx_unroll
 bench: bench.c
 	${CC} ${CFLAGS} compute_pi.c time_measure.c bench.c -o bench
 

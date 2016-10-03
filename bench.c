@@ -33,8 +33,12 @@ int main(int argc, char *argv[])
     clock_gettime(CLOCK_ID, &end);
     duration = diff_in_second(start, end);
     fprintf(output, "%s,%u,%lf\n", "avx" , N, duration);
-   
-
+    /*avx_unroll*/
+    clock_gettime(CLOCK_ID, &start);
+    compute_pi_avx_unroll(N);
+    clock_gettime(CLOCK_ID, &end);
+    duration = diff_in_second(start, end);
+    fprintf(output, "%s,%u,%lf\n", "avxunroll" , N, duration);
     fclose(output);
     return 0 ;
 }
