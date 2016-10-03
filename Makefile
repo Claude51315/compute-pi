@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS= -g -O0 -Wall -std=gnu99 -fopenmp 
-.phony: clean
+.phony: clean astyle
 
 N=1000000000
 
@@ -25,3 +25,5 @@ run: ${EXECUTABLES}
 
 clean:
 	-rm ${EXECUTABLES}
+astyle:
+	astyle --style=kr --indent=spaces=4 --indent-switches --suffix=none *.c *.h
