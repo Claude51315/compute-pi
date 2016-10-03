@@ -6,7 +6,8 @@ N=1000000000
 
 EXECUTABLES=pi_baseline \
 			pi_omp2 \
-			pi_omp4
+			pi_omp4 \
+			bench
 
 
 all: ${EXECUTABLES}
@@ -16,14 +17,20 @@ pi_omp2:
 	${CC} ${CFLAGS} -Domp2 compute_pi.c time_measure.c main.c -o pi_omp2
 pi_omp4:
 	${CC} ${CFLAGS} -Domp4 compute_pi.c time_measure.c main.c -o pi_omp4
-
+bench: bench.c
+	${CC} ${CFLAGS} compute_pi.c time_measure.c bench.c -o bench
 
 run: ${EXECUTABLES}
-	perf stat --repeat 10 ./pi_baseline ${N}
-	perf stat --repeat 10 ./pi_omp2 ${N}
-	perf stat --repeat 10 ./pi_omp4 ${N}
+	./bench 1000000
+	./bench 10000000
+	./bench 100000000
+	./bench 1000000000
+#plot using R
+plot: run
+	Rscript plot.R
 
 clean:
 	-rm ${EXECUTABLES}
+	-rm *.csv *.png
 astyle:
 	astyle --style=kr --indent=spaces=4 --indent-switches --suffix=none *.c *.h
