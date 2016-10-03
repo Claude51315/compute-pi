@@ -2,7 +2,6 @@ CC=gcc
 CFLAGS= -g -O0 -Wall -std=gnu99 -fopenmp -mavx 
 .phony: clean astyle
 
-N=1000000000
 
 EXECUTABLES=pi_baseline \
 			pi_omp2 \
@@ -11,6 +10,8 @@ EXECUTABLES=pi_baseline \
 			pi_avx_unroll \
 			bench \
 			cal_error
+
+
 
 
 all: ${EXECUTABLES}
@@ -34,6 +35,14 @@ run: bench cal_error
 		./bench $$i; \
 		./cal_error $$i; \
 	done
+run_mutiple: bench cal_error
+	for j in `seq 1 1 10`; do \
+		echo $$j; \
+		for i in `seq 1600 400 160000`; do \
+			./bench $$i; \
+			./cal_error $$i; \
+		done \
+	done
 #plot using R
 plot: run
 	Rscript plot.R
@@ -41,6 +50,6 @@ plot: run
 
 clean:
 	-rm ${EXECUTABLES}
-	-rm output.csv error.csv plot.png
+	-rm output.csv error.csv
 astyle:
 	astyle --style=kr --indent=spaces=4 --indent-switches --suffix=none *.c *.h
