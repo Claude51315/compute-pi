@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
     double pi = compute_pi_omp(N, 2);
 #elif omp4
     double pi = compute_pi_omp(N, 4);
+#elif avx
+    double pi = compute_pi_avx(N);
 #else
     double pi = compute_pi_baseline(N);
 #endif
