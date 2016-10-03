@@ -9,7 +9,8 @@ EXECUTABLES=pi_baseline \
 			pi_omp4 \
 			pi_avx \
 			pi_avx_unroll \
-			bench
+			bench \
+			cal_error
 
 
 all: ${EXECUTABLES}
@@ -25,17 +26,21 @@ pi_avx_unroll:
 	${CC} ${CFLAGS} -Davxunroll compute_pi.c time_measure.c main.c -o pi_avx_unroll
 bench: bench.c
 	${CC} ${CFLAGS} compute_pi.c time_measure.c bench.c -o bench
+cal_error: cal_error.c
+	${CC} ${CFLAGS} compute_pi.c  cal_error.c -o cal_error
 
-run: ${EXECUTABLES}
-	for i in `seq 1000 500 1000000`; do \
+run: bench cal_error
+	for i in `seq 1000 400 1000000`; do \
 		./bench $$i; \
+		./cal_error $$i; \
 	done
 #plot using R
 plot: run
 	Rscript plot.R
+	Rscript error.R
 
 clean:
 	-rm ${EXECUTABLES}
-	-rm output.csv plot.png
+	-rm output.csv error.csv plot.png
 astyle:
 	astyle --style=kr --indent=spaces=4 --indent-switches --suffix=none *.c *.h
